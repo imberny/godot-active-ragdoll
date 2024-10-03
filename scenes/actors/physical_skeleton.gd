@@ -13,6 +13,8 @@ class_name PhysicalSkeleton extends Skeleton3D
 @export var angular_spring_damping: float = 80.0
 @export var max_angular_force: float = 9999.0
 
+@export_range(0.0, 1.0) var target_interpolate = 1.0
+
 var physics_bones
 
 var _delta: float = 1.0 / 60.0
@@ -44,13 +46,19 @@ func _on_skeleton_updated() -> void:
 		var current_transform: Transform3D = (
 			global_transform * self.get_bone_global_pose(b.get_bone_id())
 		)
-		var rotation_difference: Basis = target_transform.basis * current_transform.basis.inverse()
+		var interpolated_transform := current_transform.interpolate_with(
+			target_transform, target_interpolate
+		)
+		var rotation_difference: Basis = (
+			interpolated_transform.basis * current_transform.basis.inverse()
+		)
 
-		var position_difference: Vector3 = target_transform.origin - current_transform.origin
+		var position_difference: Vector3 = interpolated_transform.origin - current_transform.origin
 
 		if position_difference.length_squared() > 1.0:
-			b.global_position = target_transform.origin
-		else:
+			pass
+			# b.global_position = interpolated_transform.origin
+		elif not position_difference.is_zero_approx():
 			var force: Vector3 = hookes_law(
 				position_difference,
 				b.linear_velocity,
@@ -69,3 +77,8 @@ func _on_skeleton_updated() -> void:
 		torque = torque.limit_length(max_angular_force)
 
 		b.angular_velocity += torque * self._delta
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle ragdoll"):
+		self.target_interpolate = 1.0 - self.target_interpolate
