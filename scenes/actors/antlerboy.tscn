@@ -1,0 +1,151 @@
+[gd_scene load_steps=18 format=3 uid="uid://bvut8vd3xtdqp"]
+
+[ext_resource type="PackedScene" uid="uid://cknjbmdtr4sta" path="res://assets/models/antlerboy.glb" id="1_3lix5"]
+[ext_resource type="Shader" path="res://scenes/actors/toon.gdshader" id="2_t4wc4"]
+[ext_resource type="Texture2D" uid="uid://buil6ttmd4wxw" path="res://assets/models/antlerboy_antler-boy-128x.png" id="3_y5b8d"]
+[ext_resource type="Texture2D" uid="uid://bcn6lpt6nr1um" path="res://assets/models/antlerboy_baldric-128x.png" id="4_exvkb"]
+
+[sub_resource type="Gradient" id="Gradient_pvoj6"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.209402, 0.440171)
+colors = PackedColorArray(0, 0, 0, 1, 0.183594, 0.183594, 0.183594, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_jipvr"]
+gradient = SubResource("Gradient_pvoj6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ch2tu"]
+render_priority = 0
+shader = ExtResource("2_t4wc4")
+shader_parameter/albedo = ExtResource("3_y5b8d")
+shader_parameter/emission_ambient_tweak = Color(0, 0, 0, 1)
+shader_parameter/rim_color = Color(0, 0, 0, 1)
+shader_parameter/rim_threshold = 0.4
+shader_parameter/shadow_color_ramp = SubResource("GradientTexture1D_jipvr")
+shader_parameter/light_tweak = Color(0, 0, 0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6rjr5"]
+render_priority = 0
+shader = ExtResource("2_t4wc4")
+shader_parameter/albedo = ExtResource("4_exvkb")
+shader_parameter/emission_ambient_tweak = Color(0, 0, 0, 1)
+shader_parameter/rim_color = Color(0.101562, 0.101562, 0.101562, 1)
+shader_parameter/rim_threshold = 0.3
+shader_parameter/shadow_color_ramp = SubResource("GradientTexture1D_jipvr")
+shader_parameter/light_tweak = Color(0.117188, 0.117188, 0.117188, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dlxb0"]
+render_priority = 0
+shader = ExtResource("2_t4wc4")
+shader_parameter/albedo = ExtResource("3_y5b8d")
+shader_parameter/emission_ambient_tweak = Color(0, 0, 0, 1)
+shader_parameter/rim_color = Color(0, 0, 0, 1)
+shader_parameter/rim_threshold = 0.3
+shader_parameter/shadow_color_ramp = SubResource("GradientTexture1D_jipvr")
+shader_parameter/light_tweak = Color(0.125, 0.125, 0.125, 1)
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_rok8b"]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_6uyga"]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_3asnj"]
+sync = true
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_v6yan"]
+animation = &"wield light r"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_mgt4c"]
+animation = &"wield light l"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_owhj2"]
+animation = &"run top f "
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_qu7vk"]
+animation = &"run f "
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_7625v"]
+graph_offset = Vector2(-346.745, 37.4939)
+nodes/Add2/node = SubResource("AnimationNodeAdd2_3asnj")
+nodes/Add2/position = Vector2(580, 60)
+"nodes/Add2 2/node" = SubResource("AnimationNodeAdd2_rok8b")
+"nodes/Add2 2/position" = Vector2(820, 80)
+"nodes/Add2 3/node" = SubResource("AnimationNodeAdd2_6uyga")
+"nodes/Add2 3/position" = Vector2(1013.14, 160.056)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_mgt4c")
+nodes/Animation/position = Vector2(620, 360)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_v6yan")
+"nodes/Animation 2/position" = Vector2(860, 380)
+nodes/output/position = Vector2(1180, 200)
+nodes/run/node = SubResource("AnimationNodeAnimation_qu7vk")
+nodes/run/position = Vector2(320, 60)
+"nodes/run top/node" = SubResource("AnimationNodeAnimation_owhj2")
+"nodes/run top/position" = Vector2(340, 240)
+node_connections = [&"Add2", 0, &"run", &"Add2", 1, &"run top", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"Animation", &"Add2 3", 0, &"Add2 2", &"Add2 3", 1, &"Animation 2", &"output", 0, &"Add2 3"]
+
+[node name="antlerboy" instance=ExtResource("1_3lix5")]
+
+[node name="Skeleton3D" parent="rig" index="0"]
+bones/1/position = Vector3(-1.70482e-09, 0.495334, 0.0314643)
+bones/1/rotation = Quaternion(0.188159, 2.41496e-07, 5.04716e-08, 0.982139)
+bones/2/rotation = Quaternion(-0.274672, -1.2578e-07, -1.05286e-07, 0.961538)
+bones/3/rotation = Quaternion(0.0129832, -0.0931028, 0.0966559, 0.990869)
+bones/4/rotation = Quaternion(0.118447, -0.264373, 0.125206, 0.948894)
+bones/5/rotation = Quaternion(0.0258123, 0.154304, -0.13984, 0.977737)
+bones/6/rotation = Quaternion(-0.074137, 0.153913, -0.140269, 0.975264)
+bones/7/rotation = Quaternion(-0.8303, -0.387558, -0.17621, 0.359655)
+bones/8/rotation = Quaternion(-0.264021, 0.767848, -0.311694, 0.493508)
+bones/9/position = Vector3(-2.92903e-07, 0.0826793, -6.1464e-08)
+bones/9/rotation = Quaternion(-3.64106e-08, -0.00868907, -3.08373e-07, 0.999962)
+bones/10/position = Vector3(2.20246e-07, 0.0826794, 8.582e-08)
+bones/10/rotation = Quaternion(0.430345, -0.0087564, 0.00335171, 0.902616)
+bones/11/position = Vector3(7.10894e-08, 0.0877248, -1.52644e-07)
+bones/11/rotation = Quaternion(-1.87234e-07, -0.0241389, -6.4267e-07, 0.999709)
+bones/12/position = Vector3(7.0453e-08, 0.0877247, 2.84947e-08)
+bones/12/rotation = Quaternion(0.0669043, -0.0207923, -0.221304, 0.972685)
+bones/13/rotation = Quaternion(-0.527896, 0.146183, 0.141921, 0.824509)
+bones/14/rotation = Quaternion(-0.269595, -0.760745, 0.297637, 0.509899)
+bones/15/position = Vector3(-4.45015e-07, 0.0830318, -1.26549e-07)
+bones/15/rotation = Quaternion(-4.01043e-07, 0.00113155, -9.15693e-08, 0.999999)
+bones/16/position = Vector3(-9.97632e-08, 0.0830315, 7.41991e-10)
+bones/16/rotation = Quaternion(0.459868, 0.0011691, -0.000352154, 0.887987)
+bones/17/position = Vector3(7.42275e-08, 0.0883198, -1.13983e-08)
+bones/17/rotation = Quaternion(1.04303e-06, 0.0319081, 8.32327e-07, 0.999491)
+bones/18/position = Vector3(-4.21029e-07, 0.0883198, -8.42978e-08)
+bones/18/rotation = Quaternion(0.0536737, 0.0343257, 0.213352, 0.974896)
+bones/19/rotation = Quaternion(0.816314, -0.0746419, -0.0921902, 0.565297)
+bones/20/position = Vector3(-4.30289e-08, 0.147257, -1.40059e-08)
+bones/20/rotation = Quaternion(2.20699e-07, 0.0798487, 6.80157e-08, 0.996807)
+bones/21/position = Vector3(6.36698e-08, 0.147257, -5.0579e-08)
+bones/21/rotation = Quaternion(0.228059, 0.0810515, -0.0189701, 0.970082)
+bones/22/position = Vector3(3.62831e-08, 0.131982, -6.51574e-08)
+bones/22/rotation = Quaternion(4.15438e-08, -0.0696088, 8.85666e-08, 0.997574)
+bones/23/position = Vector3(1.60851e-08, 0.131982, 2.8187e-08)
+bones/23/rotation = Quaternion(-0.689374, 0.0313573, 0.00429435, 0.723714)
+bones/24/position = Vector3(1.06223e-08, 0.120114, -1.55311e-09)
+bones/24/rotation = Quaternion(2.62619e-05, 0.986005, -0.166716, -3.65879e-06)
+bones/25/rotation = Quaternion(0.981739, -0.0979265, 0.163029, -0.00460419)
+bones/26/position = Vector3(7.15861e-08, 0.143392, -6.55925e-08)
+bones/26/rotation = Quaternion(4.29992e-08, -0.0405128, 4.98832e-08, 0.999179)
+bones/27/position = Vector3(2.61699e-08, 0.143391, -4.79483e-08)
+bones/27/rotation = Quaternion(0.727324, -0.0406924, 0.0447022, 0.683627)
+bones/28/position = Vector3(4.68104e-08, 0.127972, 4.05496e-08)
+bones/28/rotation = Quaternion(7.63883e-09, -0.00336484, -5.14345e-09, 0.999994)
+bones/29/position = Vector3(-4.32636e-08, 0.127972, 3.20992e-08)
+bones/29/rotation = Quaternion(-0.386309, -0.115993, 0.0335958, 0.91443)
+bones/30/position = Vector3(-3.33732e-08, 0.12007, -8.20402e-08)
+bones/30/rotation = Quaternion(-0.00903684, 0.958694, -0.284296, -0.000156466)
+
+[node name="antlerboy" parent="rig/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_ch2tu")
+
+[node name="baldric" parent="rig/Skeleton3D" index="1"]
+surface_material_override/0 = SubResource("ShaderMaterial_6rjr5")
+
+[node name="shorts" parent="rig/Skeleton3D" index="2"]
+surface_material_override/0 = SubResource("ShaderMaterial_dlxb0")
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
+tree_root = SubResource("AnimationNodeBlendTree_7625v")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Add2/add_amount = 1.0
+"parameters/Add2 2/add_amount" = 1.0
+"parameters/Add2 3/add_amount" = 1.0
